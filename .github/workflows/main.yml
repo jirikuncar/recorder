@@ -1,0 +1,25 @@
+name: Example
+
+on:
+  push:
+    branches:
+    - '*'
+  watch:
+    types: [started]
+  schedule:
+  - cron:  '0 */1 * * *'
+
+jobs:
+  example:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Count starts for this repository
+      uses: ./
+      id: stars
+      with:
+        endpoint: 'https://api.github.com/repos/jirikuncar/recorder'
+        authentication: Bearer ${{ secrets.GH_PAT }}
+        jq: '.stargazers_count'
+    - run: echo -e "${{ steps.stars.outputs.time }}\\t${{ steps.stars.outputs.response }}" | tee -a stars.tsv

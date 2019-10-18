@@ -1,0 +1,31 @@
+name: 'REST Recorder'
+author: 'Jiri Kuncar'
+description: 'Record statistics from REST endpoints.'
+branding:
+  icon: 'voicemail'
+  color: 'gray-dark'
+inputs:
+  endpoint:
+    description: 'URL of an REST endpoint (application/json).'
+    required: true
+    default: 'https://api.github.com/notifications'
+  authentication:
+    description: 'The authentication header'
+    required: false
+    default: ''
+  jq:
+    description: 'Process JSON response with JQ query'
+    required: false
+    default: '.'
+outputs:
+  response:
+    description: 'The response from the endpoint'
+  time:
+    description: 'The time we received the response'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.endpoint }}
+    - ${{ inputs.authentication }}
+    - ${{ inputs.jq }}
