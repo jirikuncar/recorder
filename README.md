@@ -25,3 +25,7 @@ The processed response from the endpoint/
 ### `time`
 
 The time we processed the request.
+
+## License
+
+The scripts and documentation in this project are released under the [MIT License](LICENSE).
