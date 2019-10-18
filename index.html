@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>History of starts</title>
+  <meta charset="utf-8">
+  <style type="text/css">
+    circle.dimple-series-1 {
+      fill: white;
+    }
+  </style>
+  <script type="text/javascript">
+    function draw(data) {
+      // D3.js setup code
+      "use strict";
+      var margin = 75,
+        width = 900 - margin,
+        height = 400 - margin;
+
+      var svg = d3.select("body")
+        .append("svg")
+        .attr("width", width + margin)
+        .attr("height", height + margin)
+        .append('g')
+        .attr('class', 'chart');
+
+      // Dimple.js Chart construction code
+      var myChart = new dimple.chart(svg, data);
+      var x = myChart.addTimeAxis("x", "Date");
+      var y = myChart.addMeasureAxis("y", "Stars");
+      y.title = "Number of stars";
+      y.tickFormat = "g";
+      y.fontSize = "auto";
+      x.dateParseFormat = "%Y";
+      x.tickFormat = "%Y";
+      x.timeInterval = 5;
+      x.fontSize = "auto";
+      x.showGridlines = true;
+      myChart.addSeries(null, dimple.plot.line);
+      myChart.addSeries(null, dimple.plot.scatter);
+      myChart.draw();
+    };
+  </script>
+</head>
+
+<body>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="http://dimplejs.org/dist/dimple.v2.0.0.min.js"></script>
+  <script type="text/javascript">
+    d3.tsv("stars.tsv", draw);
+  </script>
+</body>
+
+</html>
